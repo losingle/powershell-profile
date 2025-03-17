@@ -1,4 +1,7 @@
 #region conda initialize
+# 配置选项
+$global:ShowSystemInfoOnStartup = $true  # 设置为 $false 可以关闭系统信息显示
+
 # 自动检测 conda 安装路径
 function Get-CondaPath {
     $possiblePaths = @(
@@ -23,6 +26,11 @@ function Get-CondaPath {
 
 #region 显示系统启动信息
 function Show-SystemInfo {
+    # 如果系统信息显示被禁用，则直接返回
+    if (-not $global:ShowSystemInfoOnStartup) {
+        return
+    }
+    
     # 获取控制台宽度，确保表格合适显示
     try {
         $consoleWidth = [Console]::WindowWidth
@@ -436,7 +444,10 @@ if ($condaPath) {
 if ($global:FirstTimeLoad) {
     Clear-Host
     Write-Host ""
-    Show-SystemInfo
+    # 只有当配置允许时才显示系统信息
+    if ($global:ShowSystemInfoOnStartup) {
+        Show-SystemInfo
+    }
     Write-Host ""
     # 设置标志，表示已经显示过系统信息
     $global:FirstTimeLoad = $false
@@ -591,8 +602,25 @@ Set-Alias -Name navhelp -Value Show-NavigationCommands
 function Reload-SystemInfo {
     Clear-Host
     Write-Host ""
+    # 即使配置为不显示，reload!命令也会显示系统信息
     Show-SystemInfo
     Write-Host ""
 }
 Set-Alias -Name reload! -Value Reload-SystemInfo
+
+# 添加切换系统信息显示的命令
+function Switch-SystemInfo {
+    $global:ShowSystemInfoOnStartup = -not $global:ShowSystemInfoOnStartup
+    $status = if ($global:ShowSystemInfoOnStartup) { "启用" } else { "禁用" }
+    Write-Host "系统信息显示已$status" -ForegroundColor Cyan
+    
+    # 如果启用了显示，则立即显示系统信息
+    if ($global:ShowSystemInfoOnStartup) {
+        Clear-Host
+        Write-Host ""
+        Show-SystemInfo
+        Write-Host ""
+    }
+}
+Set-Alias -Name toggleinfo -Value Switch-SystemInfo
 #endregion

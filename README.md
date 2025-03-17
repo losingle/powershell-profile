@@ -62,6 +62,38 @@
 reload!
 ```
 
+#### 配置系统信息显示
+
+您可以控制是否在启动时显示系统信息表格：
+
+```powershell
+# 关闭系统信息显示
+$global:ShowSystemInfoOnStartup = $false
+
+# 开启系统信息显示
+$global:ShowSystemInfoOnStartup = $true
+```
+
+您也可以使用以下命令快速切换系统信息显示状态：
+
+```powershell
+toggleinfo
+```
+
+当系统信息显示被关闭时，PowerShell提示符将只显示基本信息，如：
+```
+22:28:10 PS 7.5.0 losin@WINDOWS-HOME C:\Users\losin
+$ 
+```
+
+这包括：
+- 当前时间（22:28:10）
+- PowerShell版本（PS 7.5.0）
+- 用户名和主机名（losin@WINDOWS-HOME）
+- 当前路径（C:\Users\losin）
+
+关闭系统信息显示可以加快PowerShell启动速度，特别是在配置较低的系统上或当您不需要频繁查看系统详情时。
+
 ### 快速导航命令
 
 | 命令 | 描述 |
