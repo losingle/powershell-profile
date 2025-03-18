@@ -37,13 +37,29 @@
 
 3. 安装 Nerd Fonts 字体（Oh-My-Posh 图标显示需要）：
    ```powershell
-   # 使用 Oh-My-Posh 安装 Nerd Fonts
+   # 使用 Oh-My-Posh 安装 Meslo 字体（推荐）
+   oh-my-posh font install meslo
+   
+   # 或者安装其他 Nerd Fonts
    oh-my-posh font install
    
-   # 或者手动下载安装（推荐 Cascadia Code 或 FiraCode）
+   # 或者手动下载安装
    # 从 https://www.nerdfonts.com/font-downloads 下载
    ```
    安装字体后，请在终端设置中选择带有 "NF" 或 "Nerd Font" 后缀的字体。
+
+   **Windows Terminal配置示例**：
+   在Windows Terminal的`settings.json`文件中添加以下配置：
+   ```json
+   "profiles": {
+       "defaults": {
+           "font":
+           {
+               "face": "MesloLGM Nerd Font"
+           }
+       },
+   ```
+   您也可以使用其他Nerd Font字体，如"CaskaydiaCove NF"、"FiraCode NF"等。
 
 4. 将配置文件链接到您的PowerShell配置文件位置：
    ```powershell
@@ -177,10 +193,6 @@ oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/1_shell.omp.json" | Invoke-
    # 使用自定义主题
    oh-my-posh init pwsh --config "~/custom_theme.omp.json" | Invoke-Expression
    ```
-
-#### 常见问题解决
-
-如果 Oh-My-Posh 图标显示不正确，请确保您使用的是支持 Nerd Fonts 的终端字体，如 Cascadia Code PL、FiraCode NF 等。
 
 ### PSReadLine 配置
 
@@ -322,12 +334,44 @@ devenv
 
 ## 故障排除
 
+### Oh-My-Posh图标显示不正确
+
+如果Oh-My-Posh的图标显示为方块或问号，这通常是因为您使用的终端字体不支持这些图标。请确保：
+
+1. 已安装Nerd Font字体（如上述安装步骤所示）
+   ```powershell
+   # 安装 Meslo 字体（推荐）
+   oh-my-posh font install meslo
+   ```
+2. 在终端设置中正确配置了字体
+3. 重启终端应用程序以应用新字体
+
+对于Windows Terminal，可以通过以下步骤配置字体：
+
+1. 打开Windows Terminal
+2. 点击标签栏旁边的下拉箭头，选择"设置"
+3. 在左侧导航栏中，选择"配置文件" > "默认值"
+4. 在右侧面板中，找到"外观"部分，展开"字体"设置
+5. 在"字体"下拉列表中选择一个带有"NF"或"Nerd Font"后缀的字体
+6. 点击"保存"应用更改
+
+或者，您可以直接编辑`settings.json`文件，添加如下配置：
+```json
+"profiles": {
+    "defaults": {
+        "font":
+        {
+            "face": "MesloLGM Nerd Font"
+        }
+    },
+```
+
 ### Conda功能不工作
 
 如果Conda相关功能不工作，请确保Conda已正确安装，并且可以在以下路径之一找到：
 - `D:\Developers\miniconda3`
-- `$env:USERPROFILE\miniconda3`
 - `$env:USERPROFILE\anaconda3`
+- `$env:USERPROFILE\miniconda3`
 - `C:\ProgramData\Anaconda3`
 - `C:\ProgramData\miniconda3`
 
